@@ -32,22 +32,19 @@ pip install spotipy pystray pillow
 
 ### 3. Configure the script
 
-Open `spotify_genre.py` and fill in your credentials at the top:
+Copy `config.example.py` to `config.py` and fill in your values:
 
 ```python
-CLIENT_ID     = "your_client_id"
-CLIENT_SECRET = "your_client_secret"
-REDIRECT_URI  = "https://open.spotify.com"
+CLIENT_ID      = "your_client_id"
+CLIENT_SECRET  = "your_client_secret"
+REDIRECT_URI   = "https://open.spotify.com"
 MY_DEVICE_NAME = "YOUR-PC-NAME"
+CACHE_PATH     = None  # defaults to ~/.spotify_cache
 ```
 
-To find your device name, run the script once with `MY_DEVICE_NAME = None` — it will print the device name in the terminal.
+`config.py` is gitignored, so your credentials stay on your machine.
 
-Update the cache path to match your username:
-
-```python
-cache_path=r"C:\Users\YOURNAME\Documents\.spotify_cache"
-```
+To find your device name, set `MY_DEVICE_NAME = None`, run the script and play something on your PC. It prints the device name in the terminal.
 
 ### 4. Authorize
 

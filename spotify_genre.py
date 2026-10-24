@@ -1,3 +1,4 @@
+import os
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 import webbrowser
@@ -7,13 +8,20 @@ import threading
 import pystray
 from PIL import Image, ImageDraw
 
-# --- YOUR SPOTIFY APP CREDENTIALS ---
-CLIENT_ID     = "9139d348adec481eb63519b7c3ebf3e4"
-CLIENT_SECRET = "139356707f194c64a7fe8732e831eee8"
-REDIRECT_URI  = "https://open.spotify.com"
-# ------------------------------------
+# Credentials and personal settings live in config.py, which is gitignored.
+# Copy config.example.py to config.py and fill in your own values.
+# (The credentials that appeared in earlier commits were examples from testing
+# and are not valid.)
+try:
+    import config
+except ImportError:
+    raise SystemExit("config.py not found. Copy config.example.py to config.py and add your Spotify app credentials.")
 
-MY_DEVICE_NAME = "ADITYA-DESKTOP"
+CLIENT_ID      = config.CLIENT_ID
+CLIENT_SECRET  = config.CLIENT_SECRET
+REDIRECT_URI   = getattr(config, "REDIRECT_URI", "https://open.spotify.com")
+MY_DEVICE_NAME = getattr(config, "MY_DEVICE_NAME", None)
+CACHE_PATH     = getattr(config, "CACHE_PATH", None) or os.path.join(os.path.expanduser("~"), ".spotify_cache")
 
 SCOPE = "user-read-currently-playing user-library-read user-read-playback-state"
 
@@ -22,7 +30,7 @@ sp = spotipy.Spotify(auth_manager=SpotifyOAuth(
     client_secret=CLIENT_SECRET,
     redirect_uri=REDIRECT_URI,
     scope=SCOPE,
-    cache_path=r"C:\Users\Aditya\Documents\Misc\.spotify_cache"
+    cache_path=CACHE_PATH
 ))
 
 def is_liked(track_id):
@@ -57,6 +65,8 @@ def monitor_spotify():
             current = sp.current_playback()
             if current and current.get("is_playing"):
                 device_name = current.get("device", {}).get("name", "")
+                if MY_DEVICE_NAME is None:
+                    print(f"Playing on device: {device_name}  (set MY_DEVICE_NAME in config.py)")
                 if device_name != MY_DEVICE_NAME:
                     last_track_id = None
                     time.sleep(30)

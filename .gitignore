@@ -1,3 +1,6 @@
 .spotify_cache
 __pycache__/
 *.pyc
+
+# Local credentials and settings
+config.py
