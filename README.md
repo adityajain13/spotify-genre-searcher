@@ -6,8 +6,8 @@ A lightweight Windows background tool that detects when a liked song is playing 
 
 - Runs silently in the system tray
 - Polls Spotify every 30 seconds
-- When a liked song plays on your PC, opens `SONG ARTIST genre` in Google
-- Ignores playback from other devices (phone, car, etc.)
+- When a song in your Liked Songs plays on your PC, opens `SONG ARTIST genre` in Google
+- Ignores playback from other devices (phone, car, etc.) — triggers on your PC only, regardless of what playlist or album you're playing from
 
 ## Requirements
 
@@ -68,4 +68,4 @@ Place a shortcut to `spotify_genre.pyw` in your Startup folder:
 ## Notes
 
 - The Spotify API has rate limits — polling every 30 seconds stays well within them
-- The tool only triggers when playing from the **Liked Songs** playlist on your specific PC
+- The tool triggers whenever a liked song plays on your specific PC — it doesn't matter which playlist or album you're playing from
